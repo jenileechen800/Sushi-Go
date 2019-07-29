@@ -7,7 +7,6 @@ class GameDeck:
         self.game_deck = []
         self.split_list(num_players)
 
-
     def split_list(self, num_players):
         if num_players == 2:
             self.split(2, 10)
@@ -23,15 +22,24 @@ class GameDeck:
     # splits randomized list
     # by removing first 'n' items and adding them to 'game_deck' in form of 'mini_deck'
     def split(self, num_players, split_size):
+        counter = 0
         for player in range(num_players):
-            mini_deck = self.card_deck[0:split_size]
+            mini_deck = MiniDeck(self.card_deck[0:split_size], str(counter))
+            del self.card_deck[:split_size]
             self.game_deck.append(mini_deck)
+            counter += 1
 
     def card_in_deck(self, selected_card, deck):
         for card in deck:
             if card.name == getattr(selected_card, "name"):
                 return True
         return False
+
+class MiniDeck:
+    def __init__(self, deck, name):
+        self.deck = deck
+        self.name = name
+        self.size = len(deck)
 
 
 """
